@@ -14,7 +14,7 @@ function CustomerDashboard({ user, onLogout }) {
   const fetchTransactions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/accounts/transactions', {
+      const response = await axios.get('https://banking-system-5wvx.onrender.com/api/accounts/transactions', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTransactions(response.data.transactions);
@@ -28,7 +28,7 @@ function CustomerDashboard({ user, onLogout }) {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `http://localhost:5000/api/accounts/${type}`,
+        `https://banking-system-5wvx.onrender.com/api/accounts/${type}`,
         { amount: parseFloat(amount) },
         { headers: { Authorization: `Bearer ${token}` } }
       );

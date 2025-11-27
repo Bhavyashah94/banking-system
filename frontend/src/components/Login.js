@@ -21,7 +21,7 @@ function Login({ onLogin }) {
 
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const response = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      const response = await axios.post(`https://banking-system-5wvx.onrender.com${endpoint}`, formData);
       
       localStorage.setItem('token', response.data.token);
       onLogin(response.data.user);
