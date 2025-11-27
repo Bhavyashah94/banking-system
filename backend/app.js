@@ -79,7 +79,7 @@ async function initializeDatabase() {
 
 // Middleware
 app.use(cors({
-  origin: ["https://shubh-bank.vercel.app", "https://banking-system-shh7-git-main-shubhs-projects-7495b277.vercel.app"],
+  origin: ["https://shubh-bank.vercel.app", "https://banking-system-shh7-git-main-shubhs-projects-7495b277.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));

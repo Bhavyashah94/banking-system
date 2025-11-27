@@ -14,7 +14,7 @@ function BankerDashboard({ onLogout }) {
   const fetchCustomers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://banking-system-3-wdos.onrender.com/api/accounts/customers', {
+      const response = await axios.get('http://localhost:5000/api/accounts/customers', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCustomers(response.data.customers);
@@ -27,7 +27,7 @@ function BankerDashboard({ onLogout }) {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `https://banking-system-3-wdos.onrender.com/api/accounts/customers/${customerId}/transactions`,
+        `http://localhost:5000/api/accounts/customers/${customerId}/transactions`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSelectedCustomer(customerId);
