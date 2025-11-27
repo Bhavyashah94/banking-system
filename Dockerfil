@@ -21,7 +21,6 @@ RUN mv frontend/build backend/public
 # Final runtime image
 # -----------------------
 FROM node:18
-
 WORKDIR /app
 
 COPY --from=build /app/backend .
