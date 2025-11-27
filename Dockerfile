@@ -1,7 +1,7 @@
 # ==================================
 # 1. BUILD STAGE
 # ==================================
-FROM node:18 AS build
+FROM node:20 AS build
 
 # Set the environment to production to skip installing devDependencies
 ENV NODE_ENV=production
@@ -19,7 +19,9 @@ RUN npm ci
 # -----------------
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
+RUN npm install
 RUN npm ci
+COPY frontend/ .
 RUN npm run build
 
 # -----------------
@@ -37,7 +39,7 @@ RUN mv frontend/build backend/public
 # ==================================
 # 2. FINAL RUNTIME STAGE
 # ==================================
-FROM node:18-slim 
+FROM node:20-slim 
 # Using slim for a smaller final image
 WORKDIR /app
 

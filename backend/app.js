@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path'); // <-- NEW: Path module for serving files
 const pool = require('./config/db');
 const authRoutes = require('./routes/auth');
 const accountRoutes = require('./routes/accounts');
@@ -79,16 +80,32 @@ async function initializeDatabase() {
 
 // Middleware
 app.use(cors({
-  origin: ["https://shubh-bank.vercel.app", "https://banking-system-shh7-git-main-shubhs-projects-7495b277.vercel.app", "http://localhost:3000"],
+  origin: ["https://shubh-bank.vercel.app", "https://banking-system-shh7-git-main-shubhs-projects-7495b277.vercel.app", "http://localhost:3000", "http://localhost:5000"], // Added localhost:5000 for local Docker testing
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
 app.use(express.json());
 
-// Routes
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoutes);
+
+// ----------------------------------------------------------------------
+// 🚨 CRITICAL FIX FOR "Cannot GET /" ERROR 🚨
+// ----------------------------------------------------------------------
+
+// Serve the static React files from the 'public' directory
+// The Dockerfile ensures the React build is moved into backend/public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Fallback for client-side routing (e.g., /login, /dashboard). 
+// This serves the index.html for any request not handled by the API routes.
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ----------------------------------------------------------------------
 
 // Error handling middleware
 app.use((err, req, res, next) => {
